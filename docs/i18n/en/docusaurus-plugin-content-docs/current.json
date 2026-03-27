@@ -1,0 +1,82 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Operator Guide": {
+    "message": "Operator Guide",
+    "description": "The label for category Operator Guide in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Advanced Installation": {
+    "message": "Advanced Installation",
+    "description": "The label for category Advanced Installation in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Security": {
+    "message": "Security",
+    "description": "The label for category Security in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.OpenID Connect": {
+    "message": "OpenID Connect",
+    "description": "The label for category OpenID Connect in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.User Guide": {
+    "message": "User Guide",
+    "description": "The label for category User Guide in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.How-to Guides": {
+    "message": "How-to Guides",
+    "description": "The label for category How-to Guides in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.How-to Guides.link.generated-index.title": {
+    "message": "How-to Guides",
+    "description": "The generated-index page title for category How-to Guides in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.How-to Guides.link.generated-index.description": {
+    "message": "How-to guides for using Kargo",
+    "description": "The generated-index page description for category How-to Guides in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Reference Docs": {
+    "message": "Reference Docs",
+    "description": "The label for category Reference Docs in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Promotion Steps": {
+    "message": "Promotion Steps",
+    "description": "The label for category Promotion Steps in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Webhook Receivers": {
+    "message": "Webhook Receivers",
+    "description": "The label for category Webhook Receivers in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Events": {
+    "message": "Events",
+    "description": "The label for category Events in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Notifications": {
+    "message": "Notifications",
+    "description": "The label for category Notifications in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Contributor Guide": {
+    "message": "Contributor Guide",
+    "description": "The label for category Contributor Guide in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Release Notes": {
+    "message": "Release Notes",
+    "description": "The label for category Release Notes in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.API Reference": {
+    "message": "API Reference",
+    "description": "The label for category API Reference in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.link.CRD Reference": {
+    "message": "CRD Reference",
+    "description": "The label for link CRD Reference in sidebar tutorialSidebar, linking to https://doc.crds.dev/github.com/akuity/kargo"
+  },
+  "sidebar.tutorialSidebar.link.REST API": {
+    "message": "REST API",
+    "description": "The label for link REST API in sidebar tutorialSidebar, linking to /api-docs"
+  },
+  "sidebar.tutorialSidebar.doc.gRPC API (Deprecated)": {
+    "message": "gRPC API (Deprecated)",
+    "description": "The label for the doc item gRPC API (Deprecated) in sidebar tutorialSidebar, linking to the doc api-documentation"
+  }
+}
