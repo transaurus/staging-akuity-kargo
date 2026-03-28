@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="zh-Hans" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-operator-guide/security/openid-connect/aws-cognito/index" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.8.1">
+<title data-rh="true">AWS Cognito OIDC Configuration Guide | Kargo Docs</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://docs.kargo.io/zh-Hans/operator-guide/security/openid-connect/aws-cognito/"><meta data-rh="true" property="og:locale" content="zh_Hans"><meta data-rh="true" property="og:locale:alternate" content="en"><meta data-rh="true" name="docusaurus_locale" content="zh-Hans"><meta data-rh="true" name="docsearch:language" content="zh-Hans"><meta data-rh="true" name="akuity, argoproj, argo cd, argo workflows, argo events, argo rollouts, kubernetes, gitops, devops" content="akuity, documentation, developer documentation"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="AWS Cognito OIDC Configuration Guide | Kargo Docs"><meta data-rh="true" name="description" content="This guide explains how to configure AWS Cognito as an OIDC identity provider"><meta data-rh="true" property="og:description" content="This guide explains how to configure AWS Cognito as an OIDC identity provider"><link data-rh="true" rel="icon" href="/zh-Hans/img/kargo.png"><link data-rh="true" rel="canonical" href="https://docs.kargo.io/zh-Hans/operator-guide/security/openid-connect/aws-cognito/"><link data-rh="true" rel="alternate" href="https://docs.kargo.io/operator-guide/security/openid-connect/aws-cognito/" hreflang="en"><link data-rh="true" rel="alternate" href="https://docs.kargo.io/zh-Hans/operator-guide/security/openid-connect/aws-cognito/" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://docs.kargo.io/operator-guide/security/openid-connect/aws-cognito/" hreflang="x-default"><link data-rh="true" rel="preconnect" href="https://3SQ7LK6WD9-dsn.algolia.net" crossorigin="anonymous"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Operator Guide","item":"https://docs.kargo.io/zh-Hans/operator-guide/"},{"@type":"ListItem","position":2,"name":"Security","item":"https://docs.kargo.io/zh-Hans/operator-guide/security/"},{"@type":"ListItem","position":3,"name":"OpenID Connect","item":"https://docs.kargo.io/zh-Hans/operator-guide/security/openid-connect/"},{"@type":"ListItem","position":4,"name":"AWS Cognito","item":"https://docs.kargo.io/zh-Hans/operator-guide/security/openid-connect/aws-cognito/"}]}</script><link rel="search" type="application/opensearchdescription+xml" title="Kargo Docs" href="/zh-Hans/opensearch.xml">
+<link rel="preconnect" href="https://www.google-analytics.com">
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css">
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+<script src="https://www.googletagmanager.com/gtag/js?id=G-0LYKG06H98" async></script>
+<script>function enableGtag(){window["ga-disable-G-0LYKG06H98"]=!1,gtag("js",new Date),gtag("config","G-0LYKG06H98",{anonymize_ip:!0,send_page_view:!1})}function disableGtag(){window["ga-disable-G-0LYKG06H98"]=!0}function gtag(){dataLayer.push(arguments)}function deleteCookies(e){var t=[e];document.cookie.split(";").forEach((function(e){e=e.split("=")[0].trim(),~t.indexOf(e)||(document.cookie=e+"=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/")}))}window.addEventListener("load",(function(){window.cookieconsent.initialise({type:"opt-in",theme:"classic",palette:{popup:{background:"#dddddd",text:"#000000"},button:{background:"#0064cd",text:"#ffffff"}},content:{message:"This site uses cookies to collect anonymous analytics."},onInitialise:function(){this.hasConsented()?enableGtag():(disableGtag(),deleteCookies(this.options.cookie.name))},onStatusChange:function(){this.hasConsented()?enableGtag():(disableGtag(),deleteCookies(this.options.cookie.name))}})}))</script>
+<link rel="stylesheet" href="/zh-Hans/assets/css/styles.07a93ed6.css">
+<script src="/zh-Hans/assets/js/runtime~main.cf8f1978.js" defer="defer"></script>
+<script src="/zh-Hans/assets/js/main.d63fd60d.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t="light";var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",e||t),document.documentElement.setAttribute("data-theme-choice",e||t)}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_GE5D" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" target="_self" href="/zh-Hans/"><div class="navbar__logo"><img src="/zh-Hans/img/kargo.png" alt="Kargo Documentation" class="themedComponent_Lfdm themedComponent--light_VuAA"><img src="/zh-Hans/img/kargo.png" alt="Kargo Documentation" class="themedComponent_Lfdm themedComponent--dark_oSIq"></div><b class="navbar__title text--truncate">Kargo Docs</b></a><a href="https://akuity.io/" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Akuity.io<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_alYF"><use href="#theme-svg-external-link"></use></svg></a><a href="https://kargo.io/" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Kargo.io<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_alYF"><use href="#theme-svg-external-link"></use></svg></a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><a href="https://github.com/akuity/kargo" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_alYF"><use href="#theme-svg-external-link"></use></svg></a><a href="http://akuity.community" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Discord Community<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_alYF"><use href="#theme-svg-external-link"></use></svg></a><div class="toggle_kCKc colorModeToggle_Mg1k"><button class="clean-btn toggleButton_zluu toggleButtonDisabled_GOvK" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_yD6A lightToggleIcon_Wr_v"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_yD6A darkToggleIcon_riDL"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_yD6A systemToggleIcon___gK"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_J_jM"><button type="button" class="DocSearch DocSearch-Button" aria-label="Search (Command+K)"><span class="DocSearch-Button-Container"><svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="DocSearch-Button-Placeholder">Search</span></span><span class="DocSearch-Button-Keys"></span></button></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_j5V6"><div class="docsWrapper_oM4E"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_Zsbl" type="button"></button><div class="docRoot_D_ki"><aside class="theme-doc-sidebar-container docSidebarContainer_r7Hp"><div class="sidebarViewport_RcOl"><div class="sidebar_qxNf"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_ImmZ"><ul class="theme-doc-sidebar-menu menu__list"><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/zh-Hans/">Home</a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/zh-Hans/quickstart">Quickstart</a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--active" href="/zh-Hans/operator-guide/">Operator Guide</a></div><ul class="menu__list"><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/zh-Hans/operator-guide/basic-installation">Basic Installation</a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/zh-Hans/operator-guide/advanced-installation/advanced-with-helm">Advanced Installation</a></div></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/zh-Hans/operator-guide/architecture/">Architecture</a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/zh-Hans/operator-guide/cluster-configuration">Cluster Level Configuration</a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" tabindex="0" href="/zh-Hans/operator-guide/security/">Security</a><button aria-label="Collapse sidebar category &#x27;Security&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/zh-Hans/operator-guide/security/secure-configuration">Secure Configuration</a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-3 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" tabindex="0" href="/zh-Hans/operator-guide/security/openid-connect/">OpenID Connect</a><button aria-label="Collapse sidebar category &#x27;OpenID Connect&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-4 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/zh-Hans/operator-guide/security/openid-connect/aws-cognito/">AWS Cognito</a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div></ul></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/zh-Hans/operator-guide/security/access-controls">Access Controls</a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/zh-Hans/operator-guide/security/api-tokens">API Tokens</a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/zh-Hans/operator-guide/security/managing-secrets">Managing Secrets</a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link" tabindex="0" href="/zh-Hans/operator-guide/security/ambient-credentials">Ambient Credentials</a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div></ul></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div></ul></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link" href="/zh-Hans/user-guide/">User Guide</a></div><ul class="menu__list"><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/zh-Hans/user-guide/installing-the-cli/">Installing the CLI</a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/zh-Hans/user-guide/core-concepts/">Core Concepts</a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" tabindex="0" href="/zh-Hans/user-guide/how-to-guides">How-to Guides</a><button aria-label="Expand sidebar category &#x27;How-to Guides&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/zh-Hans/user-guide/patterns/">Patterns</a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/zh-Hans/user-guide/examples">Examples</a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" tabindex="0" href="/zh-Hans/user-guide/security/">Security</a><button aria-label="Expand sidebar category &#x27;Security&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/zh-Hans/user-guide/reference-docs/promotion-templates">Reference Docs</a></div></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div></ul></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/zh-Hans/contributor-guide/">Contributor Guide</a><button aria-label="Expand sidebar category &#x27;Contributor Guide&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/zh-Hans/resources">Resources</a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/zh-Hans/faqs">FAQs</a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/zh-Hans/release-notes/v1.9.0">Release Notes</a></div></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/zh-Hans/roadmap">Roadmap</a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a href="https://doc.crds.dev/github.com/akuity/kargo" target="_blank" rel="noopener noreferrer" class="menu__link menuExternalLink_sQ97">CRD Reference<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_alYF"><use href="#theme-svg-external-link"></use></svg></a></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div><div style="position:relative"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/zh-Hans/api-docs">API Reference</a></div></li><div style="position:absolute;top:50%;right:4px;transform:translateY(-50%)"></div></div></ul></nav><button type="button" title="Collapse sidebar" aria-label="Collapse sidebar" class="button button--secondary button--outline collapseSidebarButton_fUP1"><svg width="20" height="20" aria-hidden="true" class="collapseSidebarButtonIcon_G0ee"><g fill="#7a7a7a"><path d="M9.992 10.023c0 .2-.062.399-.172.547l-4.996 7.492a.982.982 0 01-.828.454H1c-.55 0-1-.453-1-1 0-.2.059-.403.168-.551l4.629-6.942L.168 3.078A.939.939 0 010 2.528c0-.548.45-.997 1-.997h2.996c.352 0 .649.18.828.45L9.82 9.472c.11.148.172.347.172.55zm0 0"></path><path d="M19.98 10.023c0 .2-.058.399-.168.547l-4.996 7.492a.987.987 0 01-.828.454h-3c-.547 0-.996-.453-.996-1 0-.2.059-.403.168-.551l4.625-6.942-4.625-6.945a.939.939 0 01-.168-.55 1 1 0 01.996-.997h3c.348 0 .649.18.828.45l4.996 7.492c.11.148.168.347.168.55zm0 0"></path></g></svg></button></div></div></aside><main class="docMainContainer_Fllx"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_QjY_"><div class="docItemContainer_h4D0"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_GGlH" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/zh-Hans/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_bFBz"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/zh-Hans/operator-guide/"><span>Operator Guide</span></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/zh-Hans/operator-guide/security/"><span>Security</span></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/zh-Hans/operator-guide/security/openid-connect/"><span>OpenID Connect</span></a></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">AWS Cognito</span></li></ul></nav><div class="tocCollapsible_JUBi theme-doc-toc-mobile tocMobile_ZikI"><button type="button" class="clean-btn tocCollapsibleButton_oJQ1">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>AWS Cognito OIDC Configuration Guide</h1></header>
+<p>This guide explains how to configure AWS Cognito as an OIDC identity provider
+for Kargo.</p>
+<div class="theme-admonition theme-admonition-important admonition_Exc9 alert alert--info"><div class="admonitionHeading_jdSX"><span class="admonitionIcon_s0Gv"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>important</div><div class="admonitionContent_Ej3J"><p>The forms you will complete to enable Kargo to authenticate users against
+Cognito are <em>different</em> depending on whether you are:</p><ul>
+<li>
+<p>Registering Kargo as a new application client for an existing user pool.</p>
+</li>
+<li>
+<p>Creating a brand new user pool.</p>
+</li>
+</ul><p>Be certain to follow the steps below that are appropriate to your scenario.</p></div></div>
+<h2 class="anchor anchorWithStickyNavbar_dUXy" id="using-an-existing-user-pool">Using an Existing User Pool<a href="#using-an-existing-user-pool" class="hash-link" aria-label="Direct link to Using an Existing User Pool" title="Direct link to Using an Existing User Pool">​</a></h2>
+<ol>
+<li>
+<p>Navigate to Cognito in your AWS dashboard.</p>
+<p>The left sidebar may be collapsed by default. If it is, expand it by
+clicking the &quot;hamburger&quot; icon in the upper left corner of the page.</p>
+<p><img loading="lazy" alt="Cognito Home Page" src="/zh-Hans/assets/images/home-page-0cda253eb732e3eedc9b1dccec4e71aa.png" width="1312" height="957" class="img_CujE"></p>
+</li>
+<li>
+<p>Select <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">User pools</span>.</p>
+</li>
+<li>
+<p>Select the pool to which you would like to add Kargo as a client.</p>
+</li>
+<li>
+<p>Select <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">App clients</span> from the left sidebar.</p>
+</li>
+<li>
+<p>Click the <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Create app client</span> button on the upper right of the page.</p>
+</li>
+<li>
+<p>Complete the <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Create app client</span> form:</p>
+<p><img loading="lazy" alt="Create App Client" src="/zh-Hans/assets/images/create-client-c1afdb6f149a3c803496557ffc18571c.png" width="1228" height="696" class="img_CujE"></p>
+<ol>
+<li>
+<p>Under <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Application type</span>, select
+<span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Single-page application (SPA)</span>.</p>
+</li>
+<li>
+<p>Complete the <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Name your application</span> field with a descriptive
+name, such as <code>kargo</code>.</p>
+</li>
+<li>
+<p>Complete the <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Return URL</span> field with a URL of the form
+<code>https://&lt;kargo-hostname&gt;/login</code>.</p>
+</li>
+<li>
+<p>Click <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Create app client</span>.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>Skip ahead to the <a href="#configuring-the-app-client">Configuring the App Client</a>
+section of this page.</p>
+</li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_dUXy" id="creating-a-new-user-pool">Creating a New User Pool<a href="#creating-a-new-user-pool" class="hash-link" aria-label="Direct link to Creating a New User Pool" title="Direct link to Creating a New User Pool">​</a></h2>
+<ol>
+<li>
+<p>Navigate to Cognito in your AWS dashboard.</p>
+<p>The left sidebar may be collapsed by default. If it is, expand it by
+clicking the &quot;hamburger&quot; icon in the upper left corner of the page.</p>
+<p><img loading="lazy" alt="Cognito Home Page" src="/zh-Hans/assets/images/home-page-0cda253eb732e3eedc9b1dccec4e71aa.png" width="1312" height="957" class="img_CujE"></p>
+</li>
+<li>
+<p>Select <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">User pools</span>.</p>
+</li>
+<li>
+<p>Click the <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Create user pool</span> button in the upper right of the page.</p>
+</li>
+<li>
+<p>Complete the <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Set up resources for your application</span> form:</p>
+<p><img loading="lazy" alt="Create User Pool and App Client" src="/zh-Hans/assets/images/create-pool-and-client-9a3959579b22939e39b6d292a946094f.png" width="1330" height="1140" class="img_CujE"></p>
+<div class="theme-admonition theme-admonition-important admonition_Exc9 alert alert--info"><div class="admonitionHeading_jdSX"><span class="admonitionIcon_s0Gv"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>important</div><div class="admonitionContent_Ej3J"><p>This single form asks you to <em>both</em> configure the user pool <em>and</em> register
+an app client.</p><p>Also note that you have no control over the name of the user pool. A unique
+name will be generated for you upon submission of this form.</p></div></div>
+<ol>
+<li>
+<p>Under <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Application type</span>, select
+<span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Single-page application (SPA)</span>.</p>
+</li>
+<li>
+<p>Complete the <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Name your application</span> field with a descriptive
+name, such as <code>kargo</code>.</p>
+</li>
+<li>
+<p>Under <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Options for sign-in identifiers</span>, select one or more
+identifiers for users to use when signing in.</p>
+<div class="theme-admonition theme-admonition-note admonition_Exc9 alert alert--secondary"><div class="admonitionHeading_jdSX"><span class="admonitionIcon_s0Gv"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_Ej3J"><p>This is a feature of the <em>user pool</em> and not the client app.</p></div></div>
+</li>
+<li>
+<p>Under <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Required attributes for sign-up</span>, select all pieces of
+information you will require from users included in this user pool. At
+minimum, <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">email</span> must be selected.</p>
+<div class="theme-admonition theme-admonition-info admonition_Exc9 alert alert--info"><div class="admonitionHeading_jdSX"><span class="admonitionIcon_s0Gv"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>info</div><div class="admonitionContent_Ej3J"><p>Kargo is unopinionated about <em>how</em> users actually authenticate to OIDC,
+identity providers (e.g. with username/email and password, social login,
+etc.) however, Kargo <em>does</em> depend on the user&#x27;s email address being
+available in the
+<a href="https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims" target="_blank" rel="noopener noreferrer">standard claim</a>
+<code>email</code> of the user&#x27;s OIDC identity token.</p></div></div>
+</li>
+<li>
+<p>Complete the <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Return URL</span> field with a URL of the form
+<code>https://&lt;kargo-hostname&gt;/login</code>.</p>
+</li>
+<li>
+<p>Click <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Create user directory</span>.</p>
+<p>This creates the user pool <em>and</em> the app client.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>Navigate to your newly created client app:</p>
+<ol>
+<li>
+<p>Select <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">User pools</span> from the left sidebar.</p>
+</li>
+<li>
+<p>Select the user pool you just created.</p>
+</li>
+<li>
+<p>Select <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">App clients</span> from the left sidebar.</p>
+</li>
+<li>
+<p>Select the app client you just created.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>Continue on to the <a href="#configuring-the-app-client">Configuring the App Client</a>
+section of this page.</p>
+</li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_dUXy" id="configuring-the-app-client">Configuring the App Client<a href="#configuring-the-app-client" class="hash-link" aria-label="Direct link to Configuring the App Client" title="Direct link to Configuring the App Client">​</a></h2>
+<p>After completing the steps from either the
+<a href="#using-an-existing-user-pool">Using an Existing User Pool</a> or
+<a href="#creating-a-new-user-pool">Creating a New User Pool</a> section:</p>
+<ol>
+<li>
+<p>Select the <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Login pages</span> tab.</p>
+</li>
+<li>
+<p>In the <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Managed login pages configuration</span> section, click
+<span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Edit</span>.</p>
+</li>
+<li>
+<p>Complete the <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Edit managed login pages configuration</span> form:</p>
+<p><img loading="lazy" alt="Edit Managed Login Pages Configuration" src="/zh-Hans/assets/images/edit-login-pages-94df7702c5e86743dcd0a0dbaa185937.png" width="1320" height="936" class="img_CujE"></p>
+<ol>
+<li>
+<p>Under <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">URL</span>, include <em>both</em> of the following:</p>
+<ul>
+<li>
+<p><code>https://&lt;kargo-hostname&gt;/login</code></p>
+<p>This is where users of the Kargo UI will be redirected to after
+logging in.</p>
+</li>
+<li>
+<p><code>http://localhost/auth/callback</code></p>
+<p>This is where users of the <code>kargo</code> CLI will be redirected to
+redirected to after logging in. (The CLI launches a server to serve
+the request and complete the login process.)</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Under <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">OAuth 2.0 grant types</span>, ensure
+<span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Authorization code grant</span> is selected.</p>
+</li>
+<li>
+<p>Under <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">OpenID Connect scopes</span>, ensure that, at a minimum,
+<span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Email</span>, <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">OpenID</span>, and <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Profile</span> are all
+selected.</p>
+<p>You may additionally select any other scopes that permit access to other
+user information you&#x27;d like to make available to Kargo.</p>
+</li>
+<li>
+<p>Click <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Save changes</span>.</p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_dUXy" id="configure-kargo">Configure Kargo<a href="#configure-kargo" class="hash-link" aria-label="Direct link to Configure Kargo" title="Direct link to Configure Kargo">​</a></h2>
+<p>After Kargo has been registered as a client application for your Cognito user
+pool, all that remains is to retrieve relevant details and use them in
+installing or updating Kargo. The details you will require are:</p>
+<ul>
+<li>
+<p>The user pool&#x27;s issuer URL</p>
+</li>
+<li>
+<p>The client app&#x27;s client ID</p>
+</li>
+</ul>
+<p>The unofficial, but most convenient way to locate both of these is in the
+<span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">React</span> code sample in the <span style="border-radius:4px;background-color:#3F4C60;color:#fff;padding:0.2rem">Quick setup guide</span>:</p>
+<p><img loading="lazy" alt="Retrieve Client Config" src="/zh-Hans/assets/images/retrieve-client-config-df5fe404297654ca51d54eb4fa1a8788.png" width="2174" height="934" class="img_CujE"></p>
+<p>After making note of these values, use them as the values of the
+<code>api.oidc.issuerURL</code> and <code>api.oidc.clientID</code> settings when installing or
+updating Kargo using its Helm chart
+<a href="/zh-Hans/operator-guide/security/openid-connect/#configuring-kargo">as documented here</a>.</p>
+<div class="theme-admonition theme-admonition-info admonition_Exc9 alert alert--info"><div class="admonitionHeading_jdSX"><span class="admonitionIcon_s0Gv"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>info</div><div class="admonitionContent_Ej3J"><p>Using Cognito as an identity provider, there is no need to create separate
+client apps for the Kargo UI and the <code>kargo</code> CLI, and as such, the <em>same</em> client
+ID should be used for <em>both</em> the <code>api.oidc.clientID</code> and <code>api.oidc.cliClientID</code>
+settings.</p></div></div></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/zh-Hans/operator-guide/security/openid-connect/"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">OpenID Connect</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/zh-Hans/operator-guide/security/access-controls"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Access Controls</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_ABZC thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#using-an-existing-user-pool" class="table-of-contents__link toc-highlight">Using an Existing User Pool</a></li><li><a href="#creating-a-new-user-pool" class="table-of-contents__link toc-highlight">Creating a New User Pool</a></li><li><a href="#configuring-the-app-client" class="table-of-contents__link toc-highlight">Configuring the App Client</a></li><li><a href="#configure-kargo" class="table-of-contents__link toc-highlight">Configure Kargo</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2026 Akuity</div></div></div></footer></div>
+</body>
+</html>

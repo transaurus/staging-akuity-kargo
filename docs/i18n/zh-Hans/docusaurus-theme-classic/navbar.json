@@ -1,0 +1,26 @@
+{
+  "title": {
+    "message": "Kargo Docs",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "Kargo Documentation",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Akuity.io": {
+    "message": "Akuity.io",
+    "description": "Navbar item with label Akuity.io"
+  },
+  "item.label.Kargo.io": {
+    "message": "Kargo.io",
+    "description": "Navbar item with label Kargo.io"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  },
+  "item.label.Discord Community": {
+    "message": "Discord Community",
+    "description": "Navbar item with label Discord Community"
+  }
+}

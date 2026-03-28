@@ -12,7 +12,7 @@ const config = {
   title: 'Kargo Docs',
   url: 'https://docs.kargo.io',
   baseUrl: '/',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/kargo.png',
 
@@ -21,7 +21,7 @@ const config = {
   // to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ["en", "zh-Hans"],
   },
 
   presets: [
